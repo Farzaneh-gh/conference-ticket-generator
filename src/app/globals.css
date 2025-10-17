@@ -1,26 +1,82 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@font-face {
+  font-family: "Inconsolata";
+  src: url("/fonts/Inconsolata-VariableFont_wdth,wght.ttf") format("truetype");
+  font-weight: 100 900;
+  font-stretch: 75% 125%;
+  font-style: normal;
+  font-display: swap;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  body {
+    background-image:
+      url("/images/pattern-circle.svg"),
+      url("/images/pattern-squiggly-line-top.svg"),
+      url("/images/pattern-squiggly-line-bottom-desktop.svg"),
+      url("/images/pattern-lines.svg"), url("/images/background-desktop.png");
+    background-position:
+      right 30% center,
+      right top 4rem,
+      bottom left,
+      center,
+      center;
+    background-repeat: no-repeat, no-repeat, no-repeat, repeat, no-repeat;
+    background-size: auto, auto, auto, contain, cover;
+    font-family: "Inconsolata", monospace;
+    font-size: 16px;
+    overflow-x: hidden;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Mobile styles - up to 640px */
+@media (max-width: 640px) {
+  body {
+    background-position:
+      right center,
+      right top 4rem,
+      bottom left,
+      center,
+      center;
+    background-size: 30%, 30%, 50%, contain, cover;
+  }
+}
+
+/* Tablet styles - 640px to 1024px */
+@media (min-width: 641px) and (max-width: 1024px) {
+  body {
+    background-position:
+      right 20% center,
+      right top 3rem,
+      bottom left,
+      center,
+      center;
+    background-size: 20%, 30%, 40%, contain, cover;
+  }
+}
+
+/* Desktop styles - 1024px and up */
+@media (min-width: 1025px) {
+  body {
+    background-position:
+      right 30% center,
+      right top 4rem,
+      bottom left,
+      center,
+      center;
+
+    background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, no-repeat;
+
+    background-size: auto, auto, auto, 50%, cover;
+  }
+}
+
+@layer utilities {
+  .ticketbg {
+    background-image: url("/images/patternticket.svg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
 }
