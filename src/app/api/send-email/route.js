@@ -19,41 +19,28 @@ export async function POST(request) {
 
     // If we have a base64 image, attach it with CID
     if (avatar?.base64) {
-      // Extract base64 content (remove data:image/...;base64, prefix)
-      const base64String = avatar.base64;
+      const base64Match = avatar.base64.match(
+        /^data:image\/([a-zA-Z]+);base64,(.+)$/
+      );
 
-      // Check if it starts with data:image
-      if (base64String.startsWith("data:image/")) {
-        // Find the comma that separates the header from the data
-        const commaIndex = base64String.indexOf(",");
+      if (base64Match) {
+        const imageType = base64Match[1];
+        const base64Content = base64Match[2];
 
-        if (commaIndex !== -1) {
-          // Extract the header part (e.g., "data:image/png;base64")
-          const header = base64String.substring(0, commaIndex);
+        const filename = `avatar.${imageType}`;
 
-          // Extract image type (e.g., "png", "jpeg")
-          const imageTypeMatch = header.match(/image\/([a-zA-Z]+)/);
-          const imageType = imageTypeMatch ? imageTypeMatch[1] : "png";
+        // Use CID (Content-ID) for embedded image - reference by filename
+        avatarUrl = `cid:${filename}`;
 
-          // Extract the actual base64 content (after the comma)
-          const base64Content = base64String.substring(commaIndex + 1);
+        attachments.push({
+          filename: filename,
+          content: base64Content,
+        });
 
-          // Use CID (Content-ID) for embedded image
-          avatarUrl = "cid:avatar";
-
-          attachments.push({
-            filename: `avatar.${imageType}`,
-            content: base64Content,
-            content_id: "avatar",
-            disposition: "inline",
-          });
-
-          console.log("✅ Using CID attachment for avatar");
-        } else {
-          console.log("⚠️ Invalid base64 format, using placeholder");
-        }
+        console.log("✅ Using CID attachment for avatar");
+        console.log(`   Filename: ${filename}, CID: cid:${filename}`);
       } else {
-        console.log("⚠️ Not a data URL, using placeholder");
+        console.log("⚠️ Could not parse base64, using placeholder");
       }
     }
 

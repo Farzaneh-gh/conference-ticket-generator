@@ -1,10 +1,9 @@
-"use client";
+import React, { useRef } from "react";
+import Image from "next/image";
 
-import React, { useRef, useState } from "react";
-
-export default function Avatar({ onChange, error }) {
+const Avatar = ({ onChange, error }) => {
   const fileInputRef = useRef(null);
-  const [imagePreview, setImagePreview] = useState(null);
+  const [imagePreview, setImagePreview] = React.useState(null);
 
   const handleClick = () => {
     fileInputRef?.current.click();
@@ -52,25 +51,27 @@ export default function Avatar({ onChange, error }) {
   };
 
   return (
-    <div className="border-2 border-neutral-600 border-dashed w-full rounded-2xl p-4 flex flex-col justify-center items-center cursor-pointer hover:border-orange-500 transition bg-neutral-900/50 text-neutral-300 gap-4 py-8">
+    <div className="border-2 border-neutral-600 border-dashed w-full rounded-2xl p-2 flex flex-col justify-center items-center cursor-pointer hover:border-purple-500 transition bg-white/10 text-neutral-300 gap-2 py-4">
       {imagePreview ? (
         <div className="flex flex-col items-center justify-center gap-4">
-          <img
+          <Image
             src={imagePreview}
+            width={128}
+            height={128}
             alt="Avatar Preview"
-            className="w-32 h-32 object-cover rounded-xl border-2 border-neutral-700"
+            className="object-cover rounded-xl"
           />
-          <div className="flex gap-3">
+          <div>
             <button
               type="button"
-              className="bg-neutral-800 hover:bg-red-600 text-white font-semibold py-2 px-6 rounded-lg transition"
+              className="ml-4 bg-white/10 hover:bg-red-700 text-neutral-300 font-bold py-2 px-6 rounded text-sm md:text-base"
               onClick={handleRemoveImage}
             >
               Remove
             </button>
             <button
               type="button"
-              className="bg-neutral-800 hover:bg-orange-600 text-white font-semibold py-2 px-6 rounded-lg transition"
+              className="ml-4 bg-white/10 hover:bg-blue-700 text-neutral-300 font-bold py-2 px-6 rounded text-sm md:text-base"
               onClick={handleChangeImage}
             >
               Change
@@ -79,31 +80,19 @@ export default function Avatar({ onChange, error }) {
         </div>
       ) : (
         <>
-          <div
-            className="flex items-center justify-center border-2 border-neutral-700 bg-neutral-800 p-6 rounded-xl hover:bg-neutral-700 transition cursor-pointer"
-            onClick={handleClick}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-12 w-12 text-orange-500"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-              />
-            </svg>
+          <div className="flex items-center justify-center border border-neutral-300 bg-white/10 p-4 rounded-xl hover:bg-white/20 transition">
+            <Image
+              src="/images/iconupload.svg"
+              width={32}
+              height={32}
+              alt="Upload Avatar"
+              className="object-cover cursor-pointer"
+              onClick={handleClick}
+            />
           </div>
-          <div className="text-center">
-            <p className="text-base md:text-lg font-medium">
-              Click to upload avatar
-            </p>
-            <p className="text-sm text-neutral-500 mt-1">PNG, JPG up to 10MB</p>
-          </div>
+          <span className="text-sm md:text-lg">
+            Drag and drop or click to upload
+          </span>
         </>
       )}
       {error && (
@@ -120,4 +109,6 @@ export default function Avatar({ onChange, error }) {
       />
     </div>
   );
-}
+};
+
+export default Avatar;

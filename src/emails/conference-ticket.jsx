@@ -13,22 +13,27 @@ import {
   Column,
 } from "@react-email/components";
 
-export default function ConferenceTicketEmail({
+const baseUrl = process.env.VERCEL_URL
+  ? `https://${process.env.VERCEL_URL}`
+  : "";
+
+const ConferenceTicketEmail = ({
   fullName = "John Doe",
   email = "john.doe@example.com",
   github = "johndoe",
   ticketNumber = "#77517",
-  avatarUrl = "https://via.placeholder.com/150",
-}) {
+
+}) => {
   return (
     <Html>
       <Head />
+
       <Body style={main}>
         <Container style={container}>
           <Heading style={h1}>Congrats, {fullName}! 🎉</Heading>
 
           <Text style={text}>
-            Your ticket for <strong>Coding Conf 2025</strong> is ready!
+            Your ticket for <strong>Coding Conf 2026</strong> is ready!
           </Text>
 
           <Text style={text}>
@@ -44,20 +49,9 @@ export default function ConferenceTicketEmail({
 
             <Section style={ticketContent}>
               <Row>
-                <Column style={avatarColumn}>
-                  <Img
-                    src={avatarUrl}
-                    width="80"
-                    height="80"
-                    alt={fullName}
-                    style={avatar}
-                  />
-                </Column>
-                <Column style={ticketInfo}>
-                  <Text style={attendeeName}>{fullName}</Text>
-                  <Text style={attendeeEmail}>{email}</Text>
-                  <Text style={attendeeGithub}>@{github}</Text>
-                </Column>
+                <Text style={attendeeName}>{fullName}</Text>
+                <Text style={attendeeEmail}>{email}</Text>
+                <Text style={attendeeGithub}>@{github}</Text>
               </Row>
             </Section>
 
@@ -70,6 +64,12 @@ export default function ConferenceTicketEmail({
             Keep this email safe - you'll need it to check in at the event.
           </Text>
 
+          <Section style={buttonSection}>
+            <Link style={button} href="https://your-conference-site.com/ticket">
+              View Full Ticket
+            </Link>
+          </Section>
+
           <Text style={footer}>
             Questions? Reply to this email or visit our{" "}
             <Link href="https://your-conference-site.com/help" style={link}>
@@ -80,7 +80,9 @@ export default function ConferenceTicketEmail({
       </Body>
     </Html>
   );
-}
+};
+
+export default ConferenceTicketEmail;
 
 // Styles
 const main = {
@@ -117,7 +119,6 @@ const ticketSection = {
   border: "2px solid #e9ecef",
   borderRadius: "12px",
   overflow: "hidden",
-  margin: "32px",
 };
 
 const ticketHeader = {
@@ -137,7 +138,7 @@ const ticketNumberText = {
   color: "#ffffff",
   fontSize: "18px",
   fontWeight: "bold",
-  margin: "8px 0 0 0",
+  margin: "0",
 };
 
 const ticketContent = {
@@ -154,7 +155,6 @@ const avatar = {
   display: "block",
   width: "80px",
   height: "80px",
-  objectFit: "cover",
 };
 
 const ticketInfo = {
@@ -188,17 +188,34 @@ const ticketFooter = {
 };
 
 const eventDetails = {
-  color: "#333",
+  color: "#666",
   fontSize: "16px",
   margin: "0",
 };
 
+const buttonSection = {
+  padding: "32px",
+  textAlign: "center",
+};
+
+const button = {
+  backgroundColor: "#FF8C42",
+  borderRadius: "8px",
+  color: "#fff",
+  fontSize: "16px",
+  fontWeight: "bold",
+  textDecoration: "none",
+  textAlign: "center",
+  display: "inline-block",
+  padding: "12px 32px",
+};
+
 const footer = {
-  color: "#666",
+  color: "#8898aa",
   fontSize: "14px",
   lineHeight: "24px",
   padding: "0 32px",
-  marginTop: "32px",
+  textAlign: "center",
 };
 
 const link = {
