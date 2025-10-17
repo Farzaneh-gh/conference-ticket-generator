@@ -132,7 +132,7 @@ export default function Home() {
 
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="w-full flex flex-col gap-6 bg-neutral-900 p-8 rounded-2xl border-2 border-neutral-800"
+          className="w-full flex flex-col gap-6 bg-neutral-900 p-2 sm:p-4 md:p-6 lg:p-8 rounded-2xl border-2 border-neutral-800"
         >
           <div className="w-full">
             <span className="block mb-4 text-left text-sm md:text-base font-medium text-neutral-200">
